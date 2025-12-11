@@ -1,2 +1,16 @@
-# bloodcare-app
-A full-stack blood donation and donor locator application with real-time tracking, inventory management, and secure authentication.
+# BloodCare App
+
+A MERN-based Blood Donation and Locator platform with:
+
+- Real-time donor location tracking
+- Blood inventory management
+- Hospital & organisation dashboards
+- Secure authentication
+- Interactive maps with Leaflet
+
+## Tech Stack
+- React
+- Node.js
+- Express
+- MongoDB
+- Leaflet Map
