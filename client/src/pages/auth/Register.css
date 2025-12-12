@@ -1,0 +1,368 @@
+/* --------------------------------------------------
+   PAGE LAYOUT
+-------------------------------------------------- */
+.reg-container {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 1fr;
+  height: 100vh;
+  width: 100%;
+  background: #f8f8f8;
+  font-family: "Poppins", sans-serif;
+  overflow-y: auto;
+  padding: 40px 0;
+}
+
+
+/* --------------------------------------------------
+   QUOTE SECTION
+-------------------------------------------------- */
+.quote-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px 50px;
+}
+
+.quote-section h1 {
+  font-size: 42px;
+  font-weight: 700;
+  color: #a31414;
+}
+
+.quote-section p {
+  margin-top: 15px;
+  font-size: 18px;
+  color: #555;
+}
+
+
+/* --------------------------------------------------
+   FORM CARD
+-------------------------------------------------- */
+.form-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.reg-card {
+  width: 530px;
+  padding: 45px 50px;
+  border-radius: 25px;
+
+  background: #ffffff;
+
+  border: 1px solid #f2c7c7;
+  box-shadow:
+    0 8px 20px rgba(200, 60, 60, 0.12),
+    0 0 0 4px rgba(255, 235, 235, 0.7);
+
+  transition: 0.25s ease;
+}
+
+.reg-card:hover {
+  transform: translateY(-3px);
+}
+
+.reg-card h2 {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  color: #b41919;
+  margin-bottom: 28px;
+}
+
+
+/* --------------------------------------------------
+   GRID SYSTEM
+-------------------------------------------------- */
+.form-grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 22px 25px;
+}
+
+.full-width {
+  grid-column: span 3;
+}
+
+
+/* --------------------------------------------------
+   INPUT FIELDS (FLOATING LABELS)
+-------------------------------------------------- */
+.input-group {
+  position: relative;
+}
+
+.input-group input,
+.input-group select {
+  width: 100%;
+  padding: 16px 16px;
+  font-size: 15px;
+  border-radius: 12px;
+
+  border: 1px solid #e0b4b4;
+  background: #fff;
+
+  transition: 0.25s ease;
+  color: #333;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+  border-color: #c62828;
+  box-shadow: 0 0 0 3px rgba(198, 40, 40, 0.15);
+  background: #fffafa;
+}
+
+/* Cursor visibility */
+.input-group input:focus {
+  caret-color: #c62828;
+}
+
+/* Hide placeholder for floating label */
+.input-group input::placeholder {
+  color: transparent;
+}
+
+/* Floating label styling */
+.input-group label {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #777;
+  font-size: 13px;
+
+  transition: 0.25s ease;
+}
+
+/* When focused or typed */
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label,
+.input-group select:focus + label,
+.input-group select:not([value=""]) + label {
+  top: 6px;
+  font-size: 11px;
+  color: #b41919;
+}
+
+
+/* --------------------------------------------------
+   CHECKBOX
+-------------------------------------------------- */
+.checkbox-area {
+  grid-column: span 3;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 5px;
+  font-size: 14px;
+  color: #444;
+}
+
+
+/* --------------------------------------------------
+   SUBMIT BUTTON
+-------------------------------------------------- */
+.reg-btn {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 12px;
+
+  font-size: 18px;
+  font-weight: 600;
+
+  background: linear-gradient(to right, #c62828, #e25454);
+  color: #ffffff;
+
+  cursor: pointer;
+
+  transition: 0.25s ease;
+  box-shadow: 0 6px 16px rgba(198, 40, 40, 0.25);
+}
+
+.reg-btn:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(to right, #b71c1c, #d84343);
+}
+
+.reg-btn:active {
+  transform: translateY(1px);
+}
+
+
+/* --------------------------------------------------
+   LOGIN TEXT
+-------------------------------------------------- */
+.login-text {
+  text-align: center;
+  margin-top: 18px;
+  font-size: 15px;
+  color: #555;
+}
+
+.login-text span {
+  color: #c62828;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+
+/* --------------------------------------------------
+   STAT CARD (Right side)
+-------------------------------------------------- */
+.visual-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.stat-card {
+  width: 80%;
+  max-width: 310px;
+  padding: 26px 24px;
+  border-radius: 18px;
+
+  background: #ffffff;
+  border: 1px solid #f2c7c7;
+
+  text-align: center;
+  box-shadow:
+    0 6px 20px rgba(200, 60, 60, 0.15),
+    0 0 0 4px rgba(255, 235, 235, 0.7);
+}
+
+.icon-circle {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background: #ffeaea;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+
+  margin: 0 auto 15px;
+}
+
+
+/* --------------------------------------------------
+   RESPONSIVE
+-------------------------------------------------- */
+@media (max-width: 1100px) {
+  .reg-container {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .visual-section {
+    display: none;
+  }
+}
+
+@media (max-width: 750px) {
+  .reg-container {
+    grid-template-columns: 1fr;
+  }
+
+  .quote-section {
+    display: none;
+  }
+
+  .reg-card {
+    width: 92%;
+    padding: 35px;
+  }
+
+  .form-grid-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .full-width {
+    grid-column: span 1;
+  }
+}
+/* ---------------------------------------------- */
+/* FIX: Improve visibility for input + select     */
+/* ---------------------------------------------- */
+
+/* Input text */
+.input-group input {
+  color: #222 !important;        /* darker but readable */
+  background: #eef3ff !important; /* keep your light-blue bg */
+}
+
+/* Email specifically (if needed) */
+input[type="email"] {
+  color: #222 !important;
+}
+
+/* Select dropdown */
+.input-group select {
+  color: #333 !important;
+  background: #eef3ff !important; /* same bg as your inputs */
+  padding-right: 35px !important; /* space so text doesn't cut */
+}
+
+/* Fix label floating overlap on select */
+.input-group select + label {
+  top: -8px !important;
+  font-size: 12px !important;
+  color: #b41919 !important;
+}
+
+/* Keep placeholder hidden for floating label */
+.input-group select option {
+  color: #444 !important;
+}
+
+/* Improve border clarity */
+.input-group input,
+.input-group select {
+  border: 1.6px solid #d8a3a3 !important;
+  border-radius: 14px !important;
+}
+/* BEAUTIFUL BACKGROUND FOR REGISTER PAGE */
+.reg-container {
+  position: relative;
+  background: linear-gradient(135deg, #fff7f7, #f4e7ff);
+  overflow: hidden;
+}
+
+/* Floating blur circles */
+.reg-container::before,
+.reg-container::after {
+  content: "";
+  position: absolute;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.55;
+  z-index: 0; /* keeps behind all elements */
+}
+
+/* Top-left soft glow */
+.reg-container::before {
+  top: -120px;
+  left: -100px;
+  background: #ff9aa2;
+}
+
+/* Bottom-right soft glow */
+.reg-container::after {
+  bottom: -140px;
+  right: -120px;
+  background: #c8b6ff;
+}
+
+/* Ensure all content stays above background */
+.quote-section,
+.form-section,
+.visual-section {
+  position: relative;
+  z-index: 5;
+}
