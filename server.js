@@ -124,7 +124,7 @@ io.on("connection", (socket) => {
 // ===============================================
 // RUN SERVER
 // ===============================================
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 10000;
 server.listen(PORT, () => {
   console.log(
     `🚀 Server running in ${process.env.DEV_MODE} mode on port ${PORT}`.bgBlue
