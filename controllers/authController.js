@@ -2,9 +2,9 @@ const userModels = require("../models/userModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-// =============================
-// ⭐ REGISTER CONTROLLER
-// =============================
+/* =====================================
+   ⭐ REGISTER CONTROLLER
+===================================== */
 const registerController = async (req, res) => {
   try {
     const {
@@ -16,10 +16,9 @@ const registerController = async (req, res) => {
       pincode,
       bloodGroup,
       agree,
-      role,
     } = req.body;
 
-    // check existing user
+    // Check existing user
     const existingUser = await userModels.findOne({ email });
     if (existingUser) {
       return res.status(200).send({
@@ -28,15 +27,10 @@ const registerController = async (req, res) => {
       });
     }
 
-    // encrypt password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    // fix role mapping ("donar" → "donor")
-    let finalRole = role || "donor";
-    if (finalRole === "donar") finalRole = "donor";
-
-    // create user
+    // Always register as DONOR
     const user = new userModels({
       name,
       email,
@@ -46,7 +40,7 @@ const registerController = async (req, res) => {
       pincode,
       bloodGroup,
       agree,
-      role: finalRole,
+      role: "donor", // ← IMPORTANT
       pdfFile: null,
     });
 
@@ -57,9 +51,9 @@ const registerController = async (req, res) => {
       message: "User registered successfully",
       user,
     });
+
   } catch (error) {
     console.log("REGISTER ERROR:", error);
-
     return res.status(500).send({
       success: false,
       message: error.message || "Registration failed",
@@ -67,9 +61,9 @@ const registerController = async (req, res) => {
   }
 };
 
-// =============================
-// ⭐ LOGIN CONTROLLER
-// =============================
+/* =====================================
+   ⭐ LOGIN CONTROLLER
+===================================== */
 const loginController = async (req, res) => {
   try {
     const { email, password, role } = req.body;
@@ -82,11 +76,11 @@ const loginController = async (req, res) => {
       });
     }
 
-    // fix role mapping
+    // Fix role mismatch: frontend sends "donar" → convert to "donor"
     let selectedRole = role;
     if (selectedRole === "donar") selectedRole = "donor";
 
-    // role mismatch
+    // Role mismatch check
     if (user.role !== selectedRole) {
       return res.status(400).send({
         success: false,
@@ -94,9 +88,9 @@ const loginController = async (req, res) => {
       });
     }
 
-    // compare password
-    const passwordMatch = await bcrypt.compare(password, user.password);
-    if (!passwordMatch) {
+    // Compare password
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
       return res.status(404).send({
         success: false,
         message: "Invalid email or password",
@@ -116,6 +110,7 @@ const loginController = async (req, res) => {
       token,
       user,
     });
+
   } catch (error) {
     console.log("LOGIN ERROR:", error);
 
@@ -127,9 +122,9 @@ const loginController = async (req, res) => {
   }
 };
 
-// =============================
-// ⭐ CURRENT USER
-// =============================
+/* =====================================
+   ⭐ CURRENT USER CONTROLLER
+===================================== */
 const currentUserController = async (req, res) => {
   try {
     const user = await userModels.findById(req.user._id).select("-password");
@@ -146,6 +141,7 @@ const currentUserController = async (req, res) => {
       message: "User fetched successfully",
       user,
     });
+
   } catch (error) {
     return res.status(500).send({
       success: false,
@@ -155,9 +151,9 @@ const currentUserController = async (req, res) => {
   }
 };
 
-// =============================
-// EXPORTS
-// =============================
+/* =====================================
+   EXPORTS
+===================================== */
 module.exports = {
   registerController,
   loginController,

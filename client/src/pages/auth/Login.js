@@ -83,16 +83,17 @@ export default function Login() {
 
             <label className="form-label">Select Role</label>
             <select
-              className="login-input"
-              value={form.role}
-              onChange={(e) => update("role", e.target.value)}
-              required
-            >
-              <option value="donar">Donor</option>
-              <option value="admin">Admin</option>
-              <option value="hospital">Hospital</option>
-              <option value="organisation">Organisation</option>
-            </select>
+  className="login-input"
+  value={form.role}
+  onChange={(e) => update("role", e.target.value)}
+  required
+>
+  <option value="donor">Donor</option>
+  <option value="admin">Admin</option>
+  <option value="hospital">Hospital</option>
+  <option value="organisation">Organisation</option>
+</select>
+
 
             <label className="form-label">Email</label>
             <input
