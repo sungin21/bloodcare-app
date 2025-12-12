@@ -5,8 +5,8 @@ const userSchema = new mongoose.Schema(
     role: {
       type: String,
       required: true,
-      enum: ["admin", "donar"],
-      default: "donar",
+      enum: ["admin", "donor", "hospital", "organisation"],
+      default: "donor",  // user always registers as donor
     },
 
     name: {
@@ -59,9 +59,12 @@ const userSchema = new mongoose.Schema(
 
     lastDonationDate: { type: Date, default: null },
     eligible: { type: Boolean, default: true },
+
+    // ADMIN APPROVAL PROPERTIES
     isApproved: { type: Boolean, default: true },
     approvalStatus: { type: String, default: "approved" },
 
+    // OTP + EMAIL VERIFICATION
     otp: String,
     otpExpires: Date,
     isVerified: { type: Boolean, default: false },

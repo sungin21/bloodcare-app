@@ -7,7 +7,17 @@ const jwt = require("jsonwebtoken");
 // =============================
 const registerController = async (req, res) => {
   try {
-    const { name, email, password, phone, age, pincode, bloodGroup, agree, role } = req.body;
+    const {
+      name,
+      email,
+      password,
+      phone,
+      age,
+      pincode,
+      bloodGroup,
+      agree,
+      role,
+    } = req.body;
 
     // check existing user
     const existingUser = await userModels.findOne({ email });
@@ -22,6 +32,10 @@ const registerController = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
+    // fix role mapping ("donar" → "donor")
+    let finalRole = role || "donor";
+    if (finalRole === "donar") finalRole = "donor";
+
     // create user
     const user = new userModels({
       name,
@@ -32,7 +46,7 @@ const registerController = async (req, res) => {
       pincode,
       bloodGroup,
       agree,
-      role: role || "donar",
+      role: finalRole,
       pdfFile: null,
     });
 
@@ -43,7 +57,6 @@ const registerController = async (req, res) => {
       message: "User registered successfully",
       user,
     });
-
   } catch (error) {
     console.log("REGISTER ERROR:", error);
 
@@ -69,8 +82,12 @@ const loginController = async (req, res) => {
       });
     }
 
-    // role check
-    if (user.role !== role) {
+    // fix role mapping
+    let selectedRole = role;
+    if (selectedRole === "donar") selectedRole = "donor";
+
+    // role mismatch
+    if (user.role !== selectedRole) {
       return res.status(400).send({
         success: false,
         message: "Selected role does not match your account",
@@ -99,7 +116,6 @@ const loginController = async (req, res) => {
       token,
       user,
     });
-
   } catch (error) {
     console.log("LOGIN ERROR:", error);
 
@@ -130,7 +146,6 @@ const currentUserController = async (req, res) => {
       message: "User fetched successfully",
       user,
     });
-
   } catch (error) {
     return res.status(500).send({
       success: false,

@@ -53,13 +53,14 @@ app.use(morgan("dev"));
 // ================= ROUTES ==================
 app.use("/api/v1/test", require("./routes/testRoutes"));
 app.use("/api/v1/auth", require("./routes/authRoutes"));
-app.use("/api/v1/inventory", require("./routes/InventoryRoutes"));
+app.use("/api/v1/inventory", require("./routes/InventoryRoutes"));  
 app.use("/api/v1/location", require("./routes/locationRoutes"));
 app.use("/api/v1/analytics", require("./routes/analyticsRoutes"));
 app.use("/api/v1/admin", require("./routes/adminRoutes"));
 app.use("/api/v1/donation", require("./routes/donationRoutes"));
 app.use("/api/v1/request", require("./routes/requestRoutes"));
 app.use("/api/v1/otp", require("./routes/otpRoutes"));
+
 
 
 // Create HTTP server
