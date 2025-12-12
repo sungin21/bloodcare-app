@@ -11,6 +11,7 @@ const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const connectDB = require("./config/db");
 const otpRoutes = require("./routes/otpRoutes");
+
 // Load env variables
 dotenv.config();
 
@@ -21,8 +22,31 @@ require("./cron/eligibilityJob");
 // Init express
 const app = express();
 app.use(express.json());
-app.use(cors());
+
+// ===============================================
+// ✅ CORS FIX FOR VERCEL FRONTEND
+// ===============================================
+const allowedOrigins = [
+  "https://bloodcare-app.vercel.app",
+  "http://localhost:3000",
+];
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  })
+);
+
 app.use(morgan("dev"));
+
 
 // ================= ROUTES ==================
 app.use("/api/v1/test", require("./routes/testRoutes"));
@@ -34,12 +58,23 @@ app.use("/api/v1/admin", require("./routes/adminRoutes"));
 app.use("/api/v1/donation", require("./routes/donationRoutes"));
 app.use("/api/v1/request", require("./routes/requestRoutes"));
 app.use("/api/v1/otp", require("./routes/otpRoutes"));
+
+
 // Create HTTP server
 const server = http.createServer(app);
 
-// ================= SOCKET.IO via socket.js =================
-const socket = require("./socket");
-const io = socket.init(server);
+
+// ================= SOCKET.IO FIX =================
+const socketIO = require("socket.io");
+
+const io = socketIO(server, {
+  cors: {
+    origin: allowedOrigins,
+    credentials: true,
+    methods: ["GET", "POST"],
+  },
+});
+
 
 // ===============================================
 // SOCKET CONNECTION WITH AUTH CHECK
@@ -120,6 +155,7 @@ io.on("connection", (socket) => {
     console.log("🔴 Socket disconnected:", socket.id);
   });
 });
+
 
 // ===============================================
 // RUN SERVER

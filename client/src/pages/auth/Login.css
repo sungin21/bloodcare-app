@@ -244,3 +244,16 @@
   from { opacity: 0; transform: translateY(18px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+/* Fix invisible typing cursor + focus issue */
+.login-input {
+  cursor: text !important;
+  caret-color: #b91c1c !important;   /* Red blinking cursor */
+  position: relative;
+  z-index: 5;
+}
+
+.login-input:focus {
+  outline: 2px solid #b91c1c !important;
+  border-color: #b91c1c !important;
+  background: #fff !important;
+}
