@@ -44,6 +44,8 @@ app.use(
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   })
 );
+app.options("*", cors());
+
 
 app.use(morgan("dev"));
 
